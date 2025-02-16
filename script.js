@@ -1,35 +1,32 @@
-const apiKey = '975b07df844e95ea1bcf9202e509b9f4'; // Replace with your OpenWeatherMap API key
+// Write JavaScript here
+const apiKey = '5d8cbd9ad932e8ea41a41cbdaa8ac343'; // Replace with your OpenWeatherMap API key
+const apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
 
-document.getElementById('getWeather').addEventListener('click', () => {
-    const city = document.getElementById('city').value;
-    if (city) {
-        getWeather(city);
-    } else {
-        alert('Please enter a city name');
-    }
+document.getElementById('city-input-btn').addEventListener('click', () => {
+    const city = document.getElementById('city-input').value || 'Bangalore';
+    fetchWeather(city);
 });
 
-async function getWeather(city) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-    
+async function fetchWeather(city) {
+    const url = `${apiUrl}?q=${city}&appid=${apiKey}&units=metric`;
     try {
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('City not found');
-        }
         const data = await response.json();
-        displayWeather(data);
+        if (response.ok) {
+            displayWeather(data);
+        } else {
+            alert('City not found. Please try again.');
+        }
     } catch (error) {
-        document.getElementById('weatherResult').innerText = error.message;
+        console.error('Error fetching weather data:', error);
     }
 }
 
 function displayWeather(data) {
-    const weatherResult = document.getElementById('weatherResult');
-    const { name, main, weather } = data;
-    weatherResult.innerHTML = `
-        <h2>${name}</h2>
-        <p>Temperature: ${main.temp} °C</p>
-        <p>Weather: ${weather[0].description}</p>
-    `;
+    document.getElementById('city-name').textContent = data.name;
+    document.getElementById('temperature').textContent = `${Math.round(data.main.temp)}°C`;
+    document.getElementById('description').textContent = data.weather[0].description;
+    document.getElementById('wind-speed').textContent = `Wind Speed: ${data.wind.speed} m/s`;
+    document.getElementById('weather-icon').src = `https://static.vecteezy.com/system/resources/previews/037/480/395/non_2x/ai-generated-round-sun-isolated-on-transparent-background-generative-ai-png.png`;
+    document.getElementById('weather-info').style.display = 'block';
 }
