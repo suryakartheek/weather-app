@@ -5,15 +5,15 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #4CAF50, #2196F3);
+    background: linear-gradient(to right, #4316f2, #bb21f3);
 }
 
 .container {
     text-align: center;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgb(255 255 255 / 69%);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 10px rgb(0 0 0);
 }
 
 #city-input {
